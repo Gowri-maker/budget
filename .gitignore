@@ -1,0 +1,6 @@
+venv/
+__pycache__/
+*.pyc
+powerbi_exports/
+.env
+catboost_info/
