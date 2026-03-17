@@ -2,6 +2,7 @@ import streamlit as st
 from datetime import date, timedelta
 from utils.db import get_connection
 
+<<<<<<< HEAD
 st.set_page_config(page_title="Home Dashboard")
 
 # -------- SESSION CHECK --------
@@ -9,6 +10,26 @@ if "logged_in" not in st.session_state or not st.session_state.logged_in:
     st.warning("Please login first.")
     st.stop()
 
+=======
+st.set_page_config(page_title="Home Dashboard", layout="wide")
+
+# -------- SESSION CHECK --------
+if not st.session_state.get("logged_in", False):
+    st.warning("Please login first.")
+    st.stop()
+
+user_id = st.session_state.get("user_id")
+
+# -------- SIDEBAR --------
+with st.sidebar:
+    st.title("AI Budget Advisor")
+
+    if st.button("🚪 Logout"):
+        st.session_state.logged_in = False
+        st.session_state.user_id = None
+        st.switch_page("app.py")
+
+>>>>>>> 641f13997c0c67e4d9cd1b9fc35b8edf4e1f7c82
 st.title("📊 Financial Dashboard")
 
 # -------- CURRENT DATE --------
@@ -33,7 +54,11 @@ cursor.execute(
     FROM user_monthly_financials
     WHERE user_id=? AND month=? AND year=?
     """,
+<<<<<<< HEAD
     (st.session_state.user_id, current_month, current_year)
+=======
+    (user_id, current_month, current_year)
+>>>>>>> 641f13997c0c67e4d9cd1b9fc35b8edf4e1f7c82
 )
 
 monthly_data = cursor.fetchone()
@@ -53,7 +78,11 @@ cursor.execute(
     AND strftime('%Y', expense_date)=?
     """,
     (
+<<<<<<< HEAD
         st.session_state.user_id,
+=======
+        user_id,
+>>>>>>> 641f13997c0c67e4d9cd1b9fc35b8edf4e1f7c82
         f"{str(current_month).zfill(2)}",
         str(current_year)
     )
@@ -69,7 +98,11 @@ cursor.execute(
     FROM user_expenses
     WHERE user_id=? AND expense_date=?
     """,
+<<<<<<< HEAD
     (st.session_state.user_id, str(selected_date))
+=======
+    (user_id, str(selected_date))
+>>>>>>> 641f13997c0c67e4d9cd1b9fc35b8edf4e1f7c82
 )
 
 daily_spent = cursor.fetchone()[0]
@@ -106,11 +139,21 @@ col_prev, col_date, col_next = st.columns([1, 2, 1])
 
 if col_prev.button("⬅ Previous Day"):
     st.session_state.selected_date -= timedelta(days=1)
+<<<<<<< HEAD
 
 col_date.write(f"### {st.session_state.selected_date}")
 
 if col_next.button("Next Day ➡"):
     st.session_state.selected_date += timedelta(days=1)
+=======
+    st.rerun()
+
+col_date.markdown(f"### {st.session_state.selected_date}")
+
+if col_next.button("Next Day ➡"):
+    st.session_state.selected_date += timedelta(days=1)
+    st.rerun()
+>>>>>>> 641f13997c0c67e4d9cd1b9fc35b8edf4e1f7c82
 
 st.metric("Total Spent on Selected Date", f"₹{daily_spent:.2f}")
 

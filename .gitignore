@@ -1,6 +1,15 @@
 venv/
 __pycache__/
 *.pyc
+<<<<<<< HEAD
 powerbi_exports/
 .env
 catboost_info/
+=======
+*.db
+*.cbm
+powerbi_exports/
+.env
+catboost_info/
+data/*.csv
+>>>>>>> 641f13997c0c67e4d9cd1b9fc35b8edf4e1f7c82
